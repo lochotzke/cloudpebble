@@ -199,10 +199,9 @@
             this._node.val(this._value.name);
         },
         _generateNode: function() {
+            var elements = _.map(IB.ColourMap, this._createColour);
             return $('<select class="ib-property ib-colour">')
-                .append(this._createColour(IB.ColourWhite))
-                .append(this._createColour(IB.ColourBlack))
-                .append(this._createColour(IB.ColourClear))
+                .append(elements)
                 .val(this._value.name)
                 .change(_.bind(this._handleChange, this));
         },
@@ -212,11 +211,8 @@
                 .text(colour.display);
         },
         _handleChange: function() {
-            var mapping = {};
-            mapping[IB.ColourWhite.name] = IB.ColourWhite;
-            mapping[IB.ColourBlack.name] = IB.ColourBlack;
-            mapping[IB.ColourClear.name] = IB.ColourClear;
-            var val = mapping[this._node.val()];
+            var looking_for = this._node.val();
+            var val = _.findWhere(IB.ColourMap, {name: looking_for});
             if(val != this._value) {
                 this.setValue(val);
             }
