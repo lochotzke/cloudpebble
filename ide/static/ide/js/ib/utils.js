@@ -31,6 +31,8 @@
         };
     };
 
+    IB.ColourMode = 0;
+
     IB.ColourMap = {
         GColorClear: new IB.Colour('GColorClear', 'rgba(0, 0, 0, 0)', gettext('Transparent'))
     };

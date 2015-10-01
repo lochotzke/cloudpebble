@@ -195,15 +195,57 @@
     IB.Properties.Colour.prototype.constructor = IB.Properties.Colour;
     _.extend(IB.Properties.Colour.prototype, {
         setValue: function(value) {
+            if (_.isString(value)) {
+                value = IB.ColourMap[value];
+            }
+            else if (_.isArray(value)) {
+                if (value[0] == "COLOR_FALLBACK") {
+                    value = _.map(value.slice(1), function(c) {
+                        return IB.ColourMap[c];
+                    });
+                }
+            }
+            else { // Assume value is a Colour object
+                value = [value, value];
+            }
             _super.setValue.call(this, value);
-            this._node.val(this._value.name);
+            this._color_node.val(this._value[0].name);
+            this._bw_node.val(this._value[1].name);
+        },
+        getValue: function(index) {
+            var value = _super.getValue.call(this);
+            return (_.isArray(value) ? (_.isFinite(index) ? value[index] : value[IB.ColourMode]) : value);
+        },
+        fullyEquals: function(colour) {
+            return (this._value[0] == colour && this._value[1] == colour);
+        },
+        generateCode: function() {
+            if (this._value[0] !== this._value[1]) {
+                return interpolate("COLOR_FALLBACK(%s, %s)", [this._value[0].name, this._value[1].name]);
+            }
+            else {
+                return this._value[0].name;
+            }
         },
         _generateNode: function() {
-            var elements = _.map(IB.ColourMap, this._createColour);
-            return $('<select class="ib-property ib-colour">')
-                .append(elements)
+            var colour_options = _.map(IB.ColourMap, this._createColour);
+            var mono_options = _.map(IB.MonochromeMap, this._createColour);
+            var table = $(interpolate('<table class="ib-colours">' +
+                '<thead><tr><th>%s</th><th>%s</th></tr></thead>' +
+                '<tbody><tr></tr></tbody>' +
+                '</table>', [gettext("Colour Watches"), gettext("B/W Watches")]));
+            var tr = table.find('tbody tr');
+            this._color_node = $('<select class="ib-property ib-colour">')
+                .append(colour_options)
                 .val(this._value.name)
                 .change(_.bind(this._handleChange, this));
+            this._color_node.appendTo("<td>").parent().appendTo(tr);
+            this._bw_node = $('<select class="ib-property ib-colour">')
+                .append(mono_options)
+                .val(this._value.name)
+                .change(_.bind(this._handleChange, this));
+            this._bw_node.appendTo("<td>").parent().appendTo(tr);
+            return table;
         },
         _createColour: function(colour) {
             return $('<option>')
@@ -211,10 +253,12 @@
                 .text(colour.display);
         },
         _handleChange: function() {
-            var looking_for = this._node.val();
-            var val = _.findWhere(IB.ColourMap, {name: looking_for});
-            if(val != this._value) {
-                this.setValue(val);
+            var col_find = this._color_node.val();
+            var bw_find = this._bw_node.val();
+            var col_val = _.findWhere(IB.ColourMap, {name: col_find});
+            var bw_val = _.findWhere(IB.ColourMap, {name: bw_find});
+            if(col_val != this._value[0] || bw_val != this._value[1]) {
+                this.setValue([col_val, bw_val]);
             }
         }
     });
