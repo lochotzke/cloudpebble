@@ -222,9 +222,9 @@
         setValue: function(value) {
             value = this._makeColours(value);
             _super.setValue.call(this, value);
-            this._color_node.val(this._value[0].name);
-            this._color_node.siblings().find(".value").css('background-color', value[0].css);
             this._bw_node.val(this._value[1].name);
+            this._color_node.val(this._value[0].name);
+            this._setColourCSS();
         },
         getValue: function(index) {
             var value = _super.getValue.call(this);
@@ -239,6 +239,13 @@
             }
             else {
                 return this._value[0].name;
+            }
+        },
+        _setColourCSS: function() {
+            if (this._value[0]) {
+                var stripes = 'repeating-linear-gradient(45deg, #aaa, #aaa 4px, #fff 5px, #fff 10px)';
+                var css = (this._value[0] == IB.ColourClear ? stripes : this._value[0].css);
+                this._color_node.siblings().find(".value").css('background', css);
             }
         },
         _generateNode: function() {
@@ -272,9 +279,7 @@
                         }
                     }
                 });
-                if (self._value[0]) {
-                    self._color_node.siblings().find(".value").css('background-color', self._value[0].css);
-                }
+                self._setColourCSS();
             }, 1);
             return table;
         },
