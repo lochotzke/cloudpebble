@@ -223,7 +223,7 @@
             var new_value = this._makeColours(value);
             _super.setValue.call(this, new_value);
             this._bw_node.val(this._value[IB.ColourModes.Monochrome].name);
-            this._color_node.val(this._value[IB.ColourModes.Colour].name);
+            this._colour_node.val(this._value[IB.ColourModes.Colour].name);
             this._setColourCSS();
         },
         getValue: function(index) {
@@ -259,7 +259,7 @@
                 var stripes = 'repeating-linear-gradient(45deg, #aaa, #aaa 4px, #fff 5px, #fff 10px)';
                 var is_clear = this._value[IB.ColourModes.Colour] == IB.ColourClear;
                 var css = (is_clear ? stripes : this._value[IB.ColourModes.Colour].css);
-                this._color_node.siblings().find(".value").css('background', css);
+                this._colour_node.siblings().find(".value").css('background', css);
             }
         },
         _generateNode: function() {
@@ -272,7 +272,7 @@
             var tr = table.find('tbody tr');
             var td = $("<td></td>").appendTo(tr);
             var div = $('<div></div>').appendTo(td);
-            this._color_node =  $('<input type="text" class="item-color item-color-normal" name="color-1">')
+            this._colour_node =  $('<input type="text" class="item-color item-color-normal" name="color-1">')
                 .change(_.bind(this._handleChange, this))
                 .val(this._value[IB.ColourModes.Colour].name)
                 .appendTo(div);
@@ -284,7 +284,7 @@
             this._bw_node.appendTo("<td>").parent().appendTo(tr);
             var self = this;
             setTimeout(function() {
-                self._color_node.pebbleColourPicker({
+                self._colour_node.pebbleColourPicker({
                     value_mapping: function(value) {
                         if (value == "transparent") {
                             return "GColorClear";
@@ -304,7 +304,7 @@
                 .text(colour.display);
         },
         _handleChange: function() {
-            var col_find = this._color_node.val();
+            var col_find = this._colour_node.val();
             var bw_find = this._bw_node.val();
             var col_val = _.findWhere(IB.ColourMap, {name: col_find});
             var bw_val = _.findWhere(IB.ColourMap, {name: bw_find});
