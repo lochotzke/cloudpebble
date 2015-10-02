@@ -5,7 +5,7 @@
         name: gettext("Preview Mode"),
         id: 'ib-setting-colourmode',
         renderNode: function (parent) {
-            var isColour = IB.ColourMode == 0;
+            var isColour = IB.ColourMode == IB.ColourModes.Colour;
             var node = $('<select>' +
                 interpolate('<option value="0" %s>%s</option>', [(isColour ? 'selected' : ''), gettext("Colour")]) +
                 interpolate('<option value="1" %s>%s</option>', [(isColour ? '' : 'selected'), gettext("Monochrome")]) +

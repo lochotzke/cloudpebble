@@ -31,7 +31,12 @@
         };
     };
 
-    IB.ColourMode = 0;
+    IB.ColourModes = {
+        Colour: 0,
+        Monochrome: 1
+    };
+    IB.ColourMode = null;
+
 
     IB.ColourMap = {
         GColorClear: new IB.Colour('GColorClear', 'rgba(0, 0, 0, 0)', gettext('Transparent'))
