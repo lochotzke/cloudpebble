@@ -48,8 +48,8 @@
             this._node.css({
                 'background-color': this._backgroundColour.getValue().css
             });
-            var mono_bg_colour = this._backgroundColour.getValue(IB.ColourModes.Monochrome);
-            var invertIcons = (mono_bg_colour !== IB.ColourWhite && IB.ColourMode == IB.ColourModes.Monochrome);
+            var monoBgColour = this._backgroundColour.getValue(IB.ColourModes.Monochrome);
+            var invertIcons = (monoBgColour !== IB.ColourWhite && IB.ColourMode == IB.ColourModes.Monochrome);
             _.each(this._icon_nodes, function(node, it) {
                 if(invertIcons) {
                     node.addClass('ib-invert');
