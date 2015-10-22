@@ -89,7 +89,7 @@ CloudPebble.Prompts = {
             .removeAttr('disabled');
         $('#modal-text-input-errors').html('');
         $('#modal-text-input').modal();
-        $('#modal-text-input-value').focus()
+        $('#modal-text-input-value').focus();
         var submit = function() {
             callback($('#modal-text-input-value').val(), {
                 error: function(message) {
@@ -182,3 +182,46 @@ CloudPebble.Utils = {
         return interpolate(ngettext("%s second", "%s seconds", n), [n]);
     }
 };
+
+CloudPebble.GlobalShortcuts = (function() {
+    var make_shortcut_checker = function (command) {
+        if (!(command.indexOf('-') > -1)) {
+            command = _.findKey(CodeMirror.keyMap.default, _.partial(_.isEqual, command));
+        }
+        var split = command.split('-');
+        var modifier = ({
+            'ctrl': 'ctrlKey',
+            'cmd': 'metaKey'
+        })[split[0].toLowerCase()];
+        return function (e) {
+            return (e[modifier] && String.fromCharCode(e.keyCode) == split[1]);
+        }
+    };
+
+
+    var global_shortcuts = {};
+
+    $(document).keydown(function (e) {
+        if (!e.isDefaultPrevented()) {
+            _.each(global_shortcuts, function (shortcut) {
+                if (shortcut.checker(e)) {
+                    shortcut.func(e);
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+
+    return {
+        SetShortcutHandlers: function (shortcuts) {
+            var new_shortcuts = _.mapObject(shortcuts, function (func, key) {
+                return {
+                    checker: make_shortcut_checker(key),
+                    func: func
+                };
+
+            });
+            _.extend(global_shortcuts, new_shortcuts);
+        }
+    }
+})();
