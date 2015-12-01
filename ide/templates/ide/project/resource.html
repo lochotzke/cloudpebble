@@ -7,7 +7,7 @@
             <div class="control-group">
                 <label class="control-label" for="edit-resource-type">{% trans 'Resource type' %}</label>
                 <div class="controls">
-                    <select id="edit-resource-type">
+                    <select id="edit-resource-type" autofocus>
                         <option value="png">{% trans 'PNG image' %}</option>
                         {% if project.project_type == 'native' %}
                         <option value="png-trans">{% trans 'PNG with transparency' %}</option>

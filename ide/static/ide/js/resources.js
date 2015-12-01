@@ -458,7 +458,7 @@ CloudPebble.Resources = (function() {
             CloudPebble.ProgressBar.Hide();
             if(!data.success) return;
             var resource = data.resource;
-            var pane = prepare_resource_pane();
+            var pane = prepare_resource_pane({is_new: false});
 
             var list_entry = $('#sidebar-pane-resource-' + resource.id);
             var target_platforms_checkbox = pane.find("#edit-resource-target-platforms-enabled");
@@ -794,7 +794,8 @@ CloudPebble.Resources = (function() {
         return textext.textext()[0];
     };
 
-    var prepare_resource_pane = function() {
+    var prepare_resource_pane = function(options) {
+        var is_new = options.is_new;
         var template = resource_template.clone();
         template.removeClass('hide');
 
@@ -821,6 +822,9 @@ CloudPebble.Resources = (function() {
         template.find("#edit-resource-target-platforms-enabled").change(_.partial(show_resource_targets, template));
         template.find("#resource-targets-section input").change(function() {update_platform_labels(template);});
 
+        template.find('#edit-resource-type').attr('autofocus', is_new);
+        template.find('#edit-resource-file-name').attr('autofocus', !is_new);
+
         // setTimeout is used because the textarea has to actually be visible when the textext tag editor is initialised
         setTimeout(function() {
             var textext = build_tags_editor(template, template.find("#new-resource-tags"), []);
@@ -845,7 +849,7 @@ CloudPebble.Resources = (function() {
     var create_new_resource = function() {
         CloudPebble.Sidebar.SuspendActive();
         if(CloudPebble.Sidebar.Restore('new-resource')) return;
-        var pane = prepare_resource_pane();
+        var pane = prepare_resource_pane({is_new: true});
         var form = pane.find('form');
 
         form.submit(function(e) {

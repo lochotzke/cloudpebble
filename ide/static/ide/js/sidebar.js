@@ -39,6 +39,10 @@ CloudPebble.Sidebar = (function() {
         }
     };
 
+    var refocus_pane = function(pane) {
+        pane.find('*[autofocus]').first().focus();
+    };
+
     var restore_suspended_pane = function(id) {
         var pane = suspended_panes[id] ;
         if(pane) {
@@ -55,6 +59,8 @@ CloudPebble.Sidebar = (function() {
                 pane.data('pane-restore-function')();
             }
 
+            refocus_pane(pane);
+
             return true;
         }
         return false;
@@ -62,6 +68,7 @@ CloudPebble.Sidebar = (function() {
 
     var set_main_pane = function(pane, id, restore_function, destroy_function) {
         $('#main-pane').append(pane).data('pane-id', id);
+        refocus_pane(pane);
         if(restore_function) {
             $('#main-pane').data('pane-restore-function', restore_function);
         }
