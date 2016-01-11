@@ -35,7 +35,7 @@
         Colour: 0,
         Monochrome: 1
     };
-    IB.ColourMode = null;
+    IB.colourMode = null;
 
 
     IB.ColourMap = {

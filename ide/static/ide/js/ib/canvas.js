@@ -238,7 +238,7 @@
 
         function handleBackgroundChange(colour) {
             mNode.css({
-                'background-color': colour[IB.ColourMode].css
+                'background-color': colour[IB.colourMode].css
             });
             self.trigger('changeBackground', colour);
         }

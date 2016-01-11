@@ -228,7 +228,7 @@
         },
         getValue: function(index) {
             var value = _super.getValue.call(this);
-            return (_.isArray(value) ? (_.isFinite(index) ? value[index] : value[IB.ColourMode]) : value);
+            return (_.isArray(value) ? (_.isFinite(index) ? value[index] : value[IB.colourMode]) : value);
         },
         /**
          * Returns true if all variants of the colour are equal to a given one

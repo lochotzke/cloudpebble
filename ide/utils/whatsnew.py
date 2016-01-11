@@ -41,7 +41,7 @@ NEW_THINGS = [
      "You can find the screenshot button in the Compilation page, or you can run the \"Take Screenshots\" command from the fuzzy prompt (cmd-shift-P or ctrl-shift-P)"],
     ["CloudPebble has been updated to SDK 3.8! Aplite now uses SDK 3. Read more <a href='https://developer.getpebble.com/blog/2015/12/02/Bringing-the-Family-Back-Together/'>on our blog</a>.",
      "We have converted all your png and pbi resources to the new 'bitmap' format. Read more <a href='https://developer.getpebble.com/blog/2015/12/02/Bitmap-Resources/'> on our blog</a>."],
-    ["The window editor now supports colours! You can choose colours for both monochrome and colour watches for each layer, and preview both variants inside the editor."]
+    ["The window editor now supports colours! You can choose colours for both monochrome and colour watches for each layer, and preview both variants inside the editor."],
 ]
 
 

@@ -92,8 +92,8 @@
             mSettingsForm.empty();
             init();
         };
-        if (!IB.ColourMode) {
-            IB.ColourMode = (CloudPebble.ProjectInfo.sdk_version == "3" ? IB.ColourModes.Colour : IB.ColourModes.Monochrome);
+        if (!IB.colourMode) {
+            IB.colourMode = (CloudPebble.ProjectInfo.sdk_version == "3" ? IB.ColourModes.Colour : IB.ColourModes.Monochrome);
         }
         init();
     }
