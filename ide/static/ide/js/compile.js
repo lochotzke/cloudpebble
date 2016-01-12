@@ -119,9 +119,9 @@ CloudPebble.Compile = (function() {
             e.preventDefault();
             show_app_logs(ConnectionType.Phone);
         });
-        pane.find('#screenshot-btn').click(function(e) {
+        pane.find('#screenshot-btn, #screenshot-qemu-btn').click(function(e) {
             e.preventDefault();
-            take_screenshot(ConnectionType.Phone);
+            take_screenshot();
         });
         pane.find('#android-beta-link').click(function(e) {
             e.preventDefault();
@@ -147,10 +147,7 @@ CloudPebble.Compile = (function() {
             e.preventDefault();
             show_app_logs(ConnectionType.Qemu);
         });
-        pane.find('#screenshot-qemu-btn').click(function(e) {
-            e.preventDefault();
-            take_screenshot(ConnectionType.Qemu);
-        });
+
         var targetTabs = pane.find('#run-target-tabs');
         targetTabs.on('shown', function(e) {
             localStorage['activeTarget'] = $(e.target).data('run-target');
@@ -377,7 +374,7 @@ CloudPebble.Compile = (function() {
     var append_log_html = function(html) {
         // Append the HTML line to the log
         var at_bottom = logs_scrolled_to_bottom();
-        mLogHolder.append(html.append("\n"));
+        mLogHolder.append($(html).append("\n"));
         // Then, scroll to the bottom if we were already scrolled to the bottom before.
         if (at_bottom) {
             mLogHolder[0].scrollTop = mLogHolder[0].scrollHeight - mLogHolder.outerHeight();
