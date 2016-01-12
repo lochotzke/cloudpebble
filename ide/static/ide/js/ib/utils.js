@@ -41,8 +41,8 @@
         GColorClear: new IB.Colour('GColorClear', 'rgba(0, 0, 0, 0)', gettext('Transparent'))
     };
     _.each(IB.FullColourDescriptionMap, function(colour) {
-        var GColor = _.findWhere(colour.literals, {'id': 'define'}).value;
-        IB.ColourMap[GColor] = new IB.Colour(GColor, colour.html, colour.name);
+        var gcolour = _.findWhere(colour.literals, {'id': 'define'}).value;
+        IB.ColourMap[gcolour] = new IB.Colour(gcolour, colour.html, colour.name);
     });
 
     IB.ColourClear = IB.ColourMap['GColorClear'];
