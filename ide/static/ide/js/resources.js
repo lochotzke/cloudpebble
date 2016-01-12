@@ -964,7 +964,7 @@ CloudPebble.Resources = (function() {
             return names;
         },
         GetBitmaps: function() {
-            return _.filter(project_resources, function(item) { return /^png/.test(item.kind); });
+            return _.filter(project_resources, function(item) { return /^(png|bitmap)/.test(item.kind); });
         },
         GetFonts: function() {
             return _.where(project_resources, {kind: 'font'});
